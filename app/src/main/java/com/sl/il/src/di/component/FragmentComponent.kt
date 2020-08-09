@@ -3,8 +3,8 @@ package com.sl.il.src.di.component
 import androidx.fragment.app.Fragment
 import com.sl.il.src.di.FragmentScope
 import com.sl.il.src.di.module.FragmentModule
-import com.sl.il.src.ui.home.HomeFragment
-import com.sl.il.src.ui.pic.PicFragment
+import com.sl.il.src.ui.auth.AuthFragment
+import com.sl.il.src.ui.details.DetailsFragment
 import dagger.Subcomponent
 
 @FragmentScope
@@ -21,15 +21,15 @@ interface FragmentComponent {
         fun build(): FragmentComponent
     }
 
-    fun inject(fragment: HomeFragment)
-    fun inject(fragment: PicFragment)
+    fun inject(authFragment: AuthFragment)
+    fun inject(detailsFragment: DetailsFragment)
 }
 
 fun FragmentComponent.Builder.buildAndInject(fragment: Fragment) {
     val component = fragmentModule(FragmentModule(fragment)).build()
 
     when (fragment) {
-        is HomeFragment -> component.inject(fragment)
-        is PicFragment -> component.inject(fragment)
+        is AuthFragment -> component.inject(fragment)
+        is DetailsFragment -> component.inject(fragment)
     }
 }

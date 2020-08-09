@@ -1,6 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_username_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_username_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/tv_username_label"
+        app:layout_constraintTop_toTopOf="@id/tv_username_label"
+        tools:text="sample username" />
+
+    <TextView
+        android:id="@+id/tv_password_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_username_label" />
+
+    <TextView
+        android:id="@+id/tv_password_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/tv_password_label"
+        app:layout_constraintTop_toTopOf="@id/tv_password_label"
+        tools:text="sample password" />
+
+    <TextView
+        android:id="@+id/tv_encrypted_password_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/encrypted_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_password_label" />
+
+    <TextView
+        android:id="@+id/tv_encrypted_password_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/tv_encrypted_password_label"
+        app:layout_constraintTop_toTopOf="@id/tv_encrypted_password_label"
+        tools:text="sample encrypted password" />
+
+    <TextView
+        android:id="@+id/tv_jwt_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/jwt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_encrypted_password_label" />
+
+    <TextView
+        android:id="@+id/tv_jwt_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/tv_jwt_label"
+        app:layout_constraintTop_toTopOf="@id/tv_jwt_label"
+        tools:text="sample jwt" />
+
+    <TextView
+        android:id="@+id/tv_encrypted_jwt_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/encrypted_jwt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_jwt_label" />
+
+    <TextView
+        android:id="@+id/tv_encrypted_jwt_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/tv_encrypted_jwt_label"
+        app:layout_constraintTop_toTopOf="@id/tv_encrypted_jwt_label"
+        tools:text="sample encrypted jwt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

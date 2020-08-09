@@ -4,11 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.sl.il.src.R
 import com.sl.il.src.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_login_register.*
+import com.sl.il.src.utils.observeOnce
+import com.sl.il.src.utils.showSnackbar
+import kotlinx.android.synthetic.main.fragment_auth.*
 
-class LoginRegisterFragment : BaseFragment() {
+class AuthFragment : BaseFragment() {
     private val vm by lazy {
         getViewModel(AuthViewModel::class.java)
     }
@@ -17,7 +23,7 @@ class LoginRegisterFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_login_register, container, false)
+        return inflater.inflate(R.layout.fragment_auth, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,11 +34,28 @@ class LoginRegisterFragment : BaseFragment() {
             vm.login(et_username.editText?.text.toString(), et_password.editText?.text.toString())
         }
 
+        //TODO change snackbar to toast (or toasty)
+        //TODO show more informative msg to user
         btn_register.setOnClickListener {
             vm.register(
                 et_username.editText?.text.toString(),
                 et_password.editText?.text.toString()
-            )
+            ).observeOnce(viewLifecycleOwner, Observer { registrationResult ->
+                when (registrationResult.getContentIfNotHandled()) {
+                    AuthStatus.SUCCESS -> {
+                        findNavController().navigate(
+                            R.id.action_loginFragment_to_detailsFragment, bundleOf(
+                                "username" to et_username.editText?.text.toString(),
+                                "password" to et_password.editText?.text.toString()
+                            )
+                        )
+                    }
+                    AuthStatus.FAILED -> it.showSnackbar(
+                        getString(R.string.failed_registration_msg),
+                        Snackbar.LENGTH_SHORT
+                    )
+                }
+            })
         }
     }
 }

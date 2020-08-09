@@ -18,7 +18,7 @@ android {
     compileSdkVersion(29)
     defaultConfig {
         targetSdkVersion(29)
-        minSdkVersion(21)
+        minSdkVersion(23)
         applicationId = "com.sl.il.src"
         versionCode = 1
         versionName = "1.0"
@@ -57,6 +57,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.1.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
     implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
+    implementation("com.google.android.material:material:1.2.0")
 
     // Navigation
     implementation("android.arch.navigation:navigation-fragment-ktx:1.0.0")

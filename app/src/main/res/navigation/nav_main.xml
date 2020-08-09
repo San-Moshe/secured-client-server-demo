@@ -4,27 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/home">
+    app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/home"
-        android:name="com.sl.il.src.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/loginFragment"
+        android:name="com.sl.il.src.ui.auth.AuthFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_home_to_pic"
-            app:destination="@id/pic"
-            app:launchSingleTop="true"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+            android:id="@+id/action_loginFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
-
     <fragment
-        android:id="@+id/pic"
-        android:name="com.sl.il.src.ui.pic.PicFragment"
-        android:label="fragment_pic"
-        tools:layout="@layout/fragment_pic">
-    </fragment>
-
-
+        android:id="@+id/detailsFragment"
+        android:name="com.sl.il.src.ui.details.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details"/>
 </navigation>

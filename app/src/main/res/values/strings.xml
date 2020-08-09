@@ -4,4 +4,12 @@
     <string name="fetching_data">Fetching data…</string>
     <string name="sth_went_wrong">Something went wrong</string>
     <string name="fetch_suc">Fetched successfully</string>
+    <string name="register">register</string>
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="encrypted_password">encrypted password</string>
+    <string name="jwt">jwt</string>
+    <string name="encrypted_jwt">encrypted jwt</string>
+    <string name="failed_registration_msg">Registration failed, please try again later</string>
 </resources>

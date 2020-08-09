@@ -1,6 +1,6 @@
 package com.sl.il.src.backend
 
-import com.sl.il.src.backend.api.PicApi
+import com.sl.il.src.backend.api.AuthApi
 import com.sl.il.src.backend.di.module.ApiModule
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -29,12 +29,12 @@ class ApisTest {
     }
 
     @Inject
-    lateinit var picApi: PicApi
+    lateinit var authApi: AuthApi
 
     @Test
     @Ignore("Please run this method manually.")
     fun getMeiziPics() {
-        picApi.getMeiziPics(10, 0)
+        authApi.getMeiziPics(10, 0)
             .test()
             .assertNoErrors()
             .assertValue { response ->

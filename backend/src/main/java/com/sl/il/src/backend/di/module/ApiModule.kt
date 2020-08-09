@@ -1,6 +1,6 @@
 package com.sl.il.src.backend.di.module
 
-import com.sl.il.src.backend.api.PicApi
+import com.sl.il.src.backend.api.AuthApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -19,7 +19,7 @@ class ApiModule(
 ) {
 
     enum class Env(val baseUrl: String) {
-        PRODUCT("https://gank.io/api/data/%E7%A6%8F%E5%88%A9/"),
+        PRODUCT("http://192.168.43.26:3000/"),
     }
 
     @Provides
@@ -51,5 +51,5 @@ class ApiModule(
 
     @Provides
     @Singleton
-    fun providePicApi(retrofit: Retrofit): PicApi = retrofit.create(PicApi::class.java)
+    fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
 }
