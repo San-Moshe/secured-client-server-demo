@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 
 typealias MutableLiveEvent<T> = MutableLiveData<Event<T>>
+typealias LiveEvent<T> = LiveData<Event<T>>
 
 fun <T> MutableLiveEvent<T>.postValue(value: T) {
     postValue(Event(value))

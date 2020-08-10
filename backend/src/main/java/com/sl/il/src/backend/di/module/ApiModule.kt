@@ -19,7 +19,7 @@ class ApiModule(
 ) {
 
     enum class Env(val baseUrl: String) {
-        PRODUCT("http://192.168.43.26:3000/"),
+        PRODUCT("http://10.0.1.23:3000/"),
     }
 
     @Provides

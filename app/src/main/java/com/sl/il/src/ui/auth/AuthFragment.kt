@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.sl.il.src.R
 import com.sl.il.src.base.BaseFragment
-import com.sl.il.src.utils.observeOnce
 import com.sl.il.src.utils.showSnackbar
 import kotlinx.android.synthetic.main.fragment_auth.*
 
@@ -40,22 +39,45 @@ class AuthFragment : BaseFragment() {
             vm.register(
                 et_username.editText?.text.toString(),
                 et_password.editText?.text.toString()
-            ).observeOnce(viewLifecycleOwner, Observer { registrationResult ->
-                when (registrationResult.getContentIfNotHandled()) {
-                    AuthStatus.SUCCESS -> {
-                        findNavController().navigate(
-                            R.id.action_loginFragment_to_detailsFragment, bundleOf(
-                                "username" to et_username.editText?.text.toString(),
-                                "password" to et_password.editText?.text.toString()
-                            )
+            )
+        }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        vm.getRegisterEvent().observe(viewLifecycleOwner, Observer { registrationResult ->
+            when (registrationResult.getContentIfNotHandled()) {
+                AuthStatus.SUCCESS -> {
+                    findNavController().navigate(
+                        R.id.action_loginFragment_to_detailsFragment, bundleOf(
+                            "username" to et_username.editText?.text.toString(),
+                            "password" to et_password.editText?.text.toString()
                         )
-                    }
-                    AuthStatus.FAILED -> it.showSnackbar(
-                        getString(R.string.failed_registration_msg),
-                        Snackbar.LENGTH_SHORT
                     )
                 }
-            })
-        }
+                AuthStatus.FAILED -> view?.showSnackbar(
+                    getString(R.string.failed_registration_msg),
+                    Snackbar.LENGTH_SHORT
+                )
+            }
+        })
+
+        vm.getLoginEvent().observe(viewLifecycleOwner, Observer { loginResult ->
+            when (loginResult.getContentIfNotHandled()) {
+                AuthStatus.SUCCESS -> {
+                    findNavController().navigate(
+                        R.id.action_loginFragment_to_detailsFragment, bundleOf(
+                            "username" to et_username.editText?.text.toString(),
+                            "password" to et_password.editText?.text.toString()
+                        )
+                    )
+                }
+                AuthStatus.FAILED -> view?.showSnackbar(
+                    getString(R.string.failed_login_msg),
+                    Snackbar.LENGTH_SHORT
+                )
+            }
+        })
     }
 }

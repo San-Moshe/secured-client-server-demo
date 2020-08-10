@@ -12,4 +12,5 @@
     <string name="jwt">jwt</string>
     <string name="encrypted_jwt">encrypted jwt</string>
     <string name="failed_registration_msg">Registration failed, please try again later</string>
+    <string name="failed_login_msg">Login failed!</string>
 </resources>
