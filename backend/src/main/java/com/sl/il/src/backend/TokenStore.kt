@@ -85,7 +85,7 @@ class TokenStore @Inject constructor(private val sharedPref: SharedPreferences) 
         Base64.decode(sharedPref.getString(TOKEN_PREF_KEY, ""), Base64.DEFAULT)?.let {
             if (it.isNotEmpty()) {
                 if (isEncrypted) {
-                    it.toString()
+                    String(Base64.decode(it, Base64.DEFAULT))
                 } else {
                     decryptToken(it)
                 }
