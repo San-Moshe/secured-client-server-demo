@@ -17,6 +17,7 @@ import io.reactivex.parallel.ParallelFlowable
 abstract class BaseFragment : Fragment() {
     private val scopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
 
+    @ExperimentalStdlibApi
     override fun onCreate(savedInstanceState: Bundle?) {
         (context?.applicationContext as GankApplication?)?.component
             ?.newFragmentComponentBuilder()?.buildAndInject(this)

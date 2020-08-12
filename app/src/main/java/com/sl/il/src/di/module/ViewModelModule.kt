@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sl.il.src.di.DaggerViewModelFactory
 import com.sl.il.src.di.ViewModelKey
 import com.sl.il.src.ui.auth.AuthViewModel
+import com.sl.il.src.ui.details.DetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -19,4 +20,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AuthViewModel::class)
     abstract fun bindAuthViewModel(viewModel: AuthViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DetailsViewModel::class)
+    abstract fun bindDetailsViewModel(viewModel: DetailsViewModel): ViewModel
 }

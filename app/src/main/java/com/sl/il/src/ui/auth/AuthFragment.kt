@@ -13,6 +13,7 @@ import com.sl.il.src.base.BaseFragment
 import com.sl.il.src.utils.showSnackbar
 import kotlinx.android.synthetic.main.fragment_auth.*
 
+@ExperimentalStdlibApi
 class AuthFragment : BaseFragment() {
     private val vm by lazy {
         getViewModel(AuthViewModel::class.java)
