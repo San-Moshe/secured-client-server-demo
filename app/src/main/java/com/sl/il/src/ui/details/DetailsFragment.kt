@@ -31,12 +31,24 @@ class DetailsFragment : BaseFragment() {
 
         tv_encrypted_jwt_data.text = vm.getEncryptedToken()
         tv_jwt_data.text = vm.getDecryptedToken()
+
+        fab_refresh.setOnClickListener {
+            vm.refresh()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         vm.getSecuredCredentials().observe(viewLifecycleOwner, Observer {
             tv_encrypted_password_data.text = it.password
+        })
+
+        vm.getJWTLiveData().observe(viewLifecycleOwner, Observer {
+            tv_jwt_data.text = it
+        })
+
+        vm.getEncryptedJWTLiveData().observe(viewLifecycleOwner, Observer {
+            tv_encrypted_jwt_data.text = it
         })
     }
 }

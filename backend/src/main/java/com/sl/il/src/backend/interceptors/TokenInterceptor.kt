@@ -10,7 +10,9 @@ class TokenInterceptor(private val tokenStore: TokenStore) : Interceptor {
         if (url.encodedPath.contains("register") || url.encodedPath.contains("login")) {
             chain.proceed(this)
         } else {
-            val accessToken: String = tokenStore.getToken(isEncrypted = false)
+            val accessToken: String = tokenStore.getToken(isEncrypted = false,
+                key = TokenStore.TOKEN_PREF_KEY
+            )
             val request: Request = newRequestWithAccessToken(this, accessToken)
             chain.proceed(request)
         }

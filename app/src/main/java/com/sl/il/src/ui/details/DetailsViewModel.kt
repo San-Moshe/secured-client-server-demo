@@ -16,25 +16,38 @@ class DetailsViewModel @Inject constructor(
 
 ) : BaseViewModel() {
     private val securedCredentials: MutableLiveData<Credentials> = MutableLiveData()
+    private val jwt: MutableLiveData<String> = MutableLiveData()
+    private val encryptedJWT: MutableLiveData<String> = MutableLiveData()
 
     init {
         fetch()
     }
 
     fun getSecuredCredentials(): LiveData<Credentials> = securedCredentials
+    fun getJWTLiveData(): LiveData<String> = jwt
+    fun getEncryptedJWTLiveData(): LiveData<String> = encryptedJWT
+
+    fun refresh() = fetch()
 
     private fun fetch() {
         detailsApi.getCredentials().subscribeOn(Schedulers.io())
             .autoDisposable()
             .subscribe({
                 securedCredentials.postValue(it)
+                jwt.postValue(getDecryptedToken())
+                encryptedJWT.postValue(getEncryptedToken())
             }, {
                 Timber.e(it)
-
             })
     }
 
-    fun getEncryptedToken() = tokenStore.getToken(isEncrypted = true)
+    fun getEncryptedToken() = tokenStore.getToken(
+        isEncrypted = true,
+        key = TokenStore.TOKEN_PREF_KEY
+    )
 
-    fun getDecryptedToken() = tokenStore.getToken(isEncrypted = false)
+    fun getDecryptedToken() = tokenStore.getToken(
+        isEncrypted = false,
+        key = TokenStore.TOKEN_PREF_KEY
+    )
 }

@@ -93,6 +93,9 @@ dependencies {
     debugImplementation("com.willowtreeapps.hyperion:hyperion-shared-preferences:0.9.27")
     debugImplementation("com.willowtreeapps.hyperion:hyperion-timber:0.9.27")
     releaseImplementation("com.willowtreeapps.hyperion:hyperion-core-no-op:0.9.27")
+
+    debugImplementation ("com.amitshekhar.android:debug-db:1.0.6")
+
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
