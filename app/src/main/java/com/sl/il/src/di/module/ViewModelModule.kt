@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.sl.il.src.di.DaggerViewModelFactory
 import com.sl.il.src.di.ViewModelKey
 import com.sl.il.src.ui.auth.AuthViewModel
+import com.sl.il.src.ui.auth.StrongPasswordValidator
+import com.sl.il.src.ui.auth.interfaces.IPasswordValidator
 import com.sl.il.src.ui.details.DetailsViewModel
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.multibindings.IntoMap
 
 @Module

@@ -29,18 +29,31 @@ class AuthFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO add validation on input (prevent sql injection etc...)
         btn_login.setOnClickListener {
             vm.login(et_username.editText?.text.toString(), et_password.editText?.text.toString())
         }
 
-        //TODO change snackbar to toast (or toasty)
-        //TODO show more informative msg to user
         btn_register.setOnClickListener {
             vm.register(
                 et_username.editText?.text.toString(),
                 et_password.editText?.text.toString()
-            )
+            ).let {
+                if (!it) {
+                    view.showSnackbar(
+                        """Password must be:
+At least 8 chars
+
+Contains at least one digit
+
+Contains at least one lower alpha char and one upper alpha char
+
+Contains at least one char within a set of special chars (@#%$^ etc.)
+
+Does not contain space, tab, etc. """,
+                        Snackbar.LENGTH_SHORT
+                    )
+                }
+            }
         }
     }
 
