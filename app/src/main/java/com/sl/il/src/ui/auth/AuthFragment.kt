@@ -13,6 +13,8 @@ import com.sl.il.src.base.BaseFragment
 import com.sl.il.src.utils.showSnackbar
 import kotlinx.android.synthetic.main.fragment_auth.*
 
+//TODO login without credentials in-case you already have JWT
+
 class AuthFragment : BaseFragment() {
     private val vm by lazy {
         getViewModel(AuthViewModel::class.java)
@@ -30,17 +32,23 @@ class AuthFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_login.setOnClickListener {
-            vm.login(et_username.editText?.text.toString(), et_password.editText?.text.toString())
+            if (et_username.editText?.text?.isNotBlank() == true) {
+                vm.login(
+                    et_username.editText?.text.toString(),
+                    et_password.editText?.text.toString()
+                )
+            }
         }
 
         btn_register.setOnClickListener {
-            vm.register(
-                et_username.editText?.text.toString(),
-                et_password.editText?.text.toString()
-            ).let {
-                if (!it) {
-                    view.showSnackbar(
-                        """Password must be:
+            if (et_username.editText?.text?.isNotBlank() == true) {
+                vm.register(
+                    et_username.editText?.text.toString(),
+                    et_password.editText?.text.toString()
+                ).let {
+                    if (!it) {
+                        view.showSnackbar(
+                            """Password must be:
 At least 8 chars
 
 Contains at least one digit
@@ -50,8 +58,9 @@ Contains at least one lower alpha char and one upper alpha char
 Contains at least one char within a set of special chars (@#%$^ etc.)
 
 Does not contain space, tab, etc. """,
-                        Snackbar.LENGTH_SHORT
-                    )
+                            Snackbar.LENGTH_SHORT
+                        )
+                    }
                 }
             }
         }
