@@ -7,7 +7,6 @@ import com.sl.il.src.ui.auth.AuthFragment
 import com.sl.il.src.ui.details.DetailsFragment
 import dagger.Subcomponent
 
-@ExperimentalStdlibApi
 @FragmentScope
 @Subcomponent(
     modules = [
@@ -26,7 +25,6 @@ interface FragmentComponent {
     fun inject(detailsFragment: DetailsFragment)
 }
 
-@ExperimentalStdlibApi
 fun FragmentComponent.Builder.buildAndInject(fragment: Fragment) {
     val component = fragmentModule(FragmentModule(fragment)).build()
 
