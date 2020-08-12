@@ -3,6 +3,9 @@ package com.sl.il.src.backend.di.module
 import com.sl.il.src.backend.api.AuthApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.sl.il.src.backend.TokenStore
+import com.sl.il.src.backend.api.DetailApi
+import com.sl.il.src.backend.interceptors.TokenInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -24,7 +27,7 @@ class ApiModule(
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient = httpClientBuilder
+    fun provideHttpClient(tokenStore: TokenStore): OkHttpClient = httpClientBuilder
         .addInterceptor { chain ->
             val oldReq = chain.request()
             val newReqBuilder = oldReq.newBuilder()
@@ -33,7 +36,7 @@ class ApiModule(
             newReqBuilder.addHeader("x-device-platform", "android")
 
             chain.proceed(newReqBuilder.build())
-        }
+        }.addInterceptor(TokenInterceptor(tokenStore))
         .build()
 
     @Provides
@@ -52,4 +55,8 @@ class ApiModule(
     @Provides
     @Singleton
     fun provideAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDetailApi(retrofit: Retrofit): DetailApi = retrofit.create(DetailApi::class.java)
 }

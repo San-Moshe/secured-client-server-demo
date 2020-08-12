@@ -1,5 +1,6 @@
 package com.sl.il.src.ui.auth
 
+import com.sl.il.src.backend.TokenStore
 import com.sl.il.src.backend.api.AuthApi
 import com.sl.il.src.backend.model.Credentials
 import com.sl.il.src.base.BaseViewModel
@@ -11,7 +12,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class AuthViewModel @Inject constructor(
-    private val authApi: AuthApi
+    private val authApi: AuthApi,
+    private val tokenStore: TokenStore
 ) : BaseViewModel() {
     //TODO consider using kotlin Result
     //TODO consider using authEvent with status for all 4 scenarios instead of 2 separated events
@@ -21,10 +23,12 @@ class AuthViewModel @Inject constructor(
     fun getRegisterEvent(): LiveEvent<AuthStatus> = registerEvent
     fun getLoginEvent(): LiveEvent<AuthStatus> = loginEvent
 
+    @ExperimentalStdlibApi
     fun register(username: String, password: String) {
         authApi.postRegister(Credentials(username, password)).subscribeOn(Schedulers.io())
             .autoDisposable()
-            .subscribe({
+            .subscribe({ token ->
+                tokenStore.storeToken(token.token)
                 registerEvent.postValue(AuthStatus.SUCCESS)
             }, {
                 Timber.e(it)
