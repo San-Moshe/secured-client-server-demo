@@ -8,5 +8,11 @@ import kotlinx.android.parcel.Parcelize
 data class Token(
     @SerializedName("success") val success: String,
     @SerializedName("message") val message: String,
-    @SerializedName("token") val token: String
+    @SerializedName("token") val token: String,
+    @SerializedName("refreshToken") val refreshToken: String
+) : Parcelable
+
+@Parcelize
+data class TokenReq(
+    @SerializedName("refreshToken") val token: String
 ) : Parcelable

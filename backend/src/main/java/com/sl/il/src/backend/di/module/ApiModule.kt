@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.sl.il.src.backend.TokenStore
 import com.sl.il.src.backend.api.DetailApi
+import com.sl.il.src.backend.authenticators.TokenAuthenticator
 import com.sl.il.src.backend.interceptors.TokenInterceptor
 import dagger.Module
 import dagger.Provides
@@ -25,19 +26,25 @@ class ApiModule(
         PRODUCT("http://10.0.1.23:3000/"),
     }
 
+    @ExperimentalStdlibApi
     @Provides
     @Singleton
-    fun provideHttpClient(tokenStore: TokenStore): OkHttpClient = httpClientBuilder
-        .addInterceptor { chain ->
-            val oldReq = chain.request()
-            val newReqBuilder = oldReq.newBuilder()
+    fun provideHttpClient(
+        tokenAuthenticator: TokenAuthenticator,
+        tokenStore: TokenStore
+    ): OkHttpClient =
+        httpClientBuilder
+            .addInterceptor { chain ->
+                val oldReq = chain.request()
+                val newReqBuilder = oldReq.newBuilder()
 
-            // Add headers
-            newReqBuilder.addHeader("x-device-platform", "android")
+                // Add headers
+                newReqBuilder.addHeader("x-device-platform", "android")
 
-            chain.proceed(newReqBuilder.build())
-        }.addInterceptor(TokenInterceptor(tokenStore))
-        .build()
+                chain.proceed(newReqBuilder.build())
+            }.addInterceptor(TokenInterceptor(tokenStore))
+            .authenticator(tokenAuthenticator)
+            .build()
 
     @Provides
     @Singleton

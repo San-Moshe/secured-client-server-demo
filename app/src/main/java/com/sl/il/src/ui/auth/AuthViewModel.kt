@@ -31,7 +31,8 @@ class AuthViewModel @Inject constructor(
             authApi.postRegister(Credentials(username, password)).subscribeOn(Schedulers.io())
                 .autoDisposable()
                 .subscribe({ token ->
-                    tokenStore.storeToken(token.token)
+                    tokenStore.storeToken(token.token, TokenStore.TOKEN_PREF_KEY)
+                    tokenStore.storeToken(token.refreshToken, TokenStore.REFRESH_TOKEN_PREF_KEY)
                     registerEvent.postValue(AuthStatus.SUCCESS)
                 }, {
                     Timber.e(it)
