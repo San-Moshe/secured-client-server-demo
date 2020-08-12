@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import com.sl.il.src.GankApplication
+import com.sl.il.src.MaybeSecuredApplication
 import com.sl.il.src.di.component.buildAndInject
 import com.evernote.android.state.StateSaver
 import com.uber.autodispose.*
@@ -19,7 +19,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private val scopeProvider by lazy { AndroidLifecycleScopeProvider.from(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as GankApplication).component
+        (application as MaybeSecuredApplication).component
             .newActivityComponentBuilder().buildAndInject(this)
         super.onCreate(savedInstanceState)
         StateSaver.restoreInstanceState(this, savedInstanceState)
@@ -37,10 +37,10 @@ abstract class BaseActivity : AppCompatActivity() {
         getViewModelProvider(this).get(modelClass)
 
     fun getViewModelProvider(fragment: Fragment) =
-        ViewModelProviders.of(fragment, (application as GankApplication).viewModelFactory)
+        ViewModelProviders.of(fragment, (application as MaybeSecuredApplication).viewModelFactory)
 
     fun getViewModelProvider(activity: FragmentActivity) =
-        ViewModelProviders.of(activity, (application as GankApplication).viewModelFactory)
+        ViewModelProviders.of(activity, (application as MaybeSecuredApplication).viewModelFactory)
 
     /**
      * Modified from https://github.com/uber/AutoDispose

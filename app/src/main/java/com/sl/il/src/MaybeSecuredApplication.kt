@@ -13,7 +13,7 @@ import okhttp3.OkHttpClient
 import timber.log.Timber
 import javax.inject.Inject
 
-open class GankApplication : Application() {
+open class MaybeSecuredApplication : Application() {
     lateinit var component: AppComponent
     @Inject
     lateinit var flipperClient: FlipperClient

@@ -23,7 +23,7 @@ class ApiModule(
 ) {
 
     enum class Env(val baseUrl: String) {
-        PRODUCT("http://10.0.1.23:3000/"),
+        PRODUCT("https://secured-server-openu.herokuapp.com/"),
     }
 
     @ExperimentalStdlibApi

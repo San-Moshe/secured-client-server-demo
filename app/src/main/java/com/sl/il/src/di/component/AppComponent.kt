@@ -1,6 +1,6 @@
 package com.sl.il.src.di.component
 
-import com.sl.il.src.GankApplication
+import com.sl.il.src.MaybeSecuredApplication
 import com.sl.il.src.backend.di.module.ApiModule
 import com.sl.il.src.di.AppScope
 import com.sl.il.src.di.module.AppModule
@@ -21,7 +21,7 @@ import javax.inject.Singleton
 )
 interface AppComponent {
 
-    fun inject(app: GankApplication)
+    fun inject(app: MaybeSecuredApplication)
 
     fun newActivityComponentBuilder(): ActivityComponent.Builder
 
