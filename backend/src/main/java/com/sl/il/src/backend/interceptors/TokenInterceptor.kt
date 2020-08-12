@@ -18,7 +18,7 @@ class TokenInterceptor(private val tokenStore: TokenStore) : Interceptor {
 
     private fun newRequestWithAccessToken(request: Request, accessToken: String): Request {
         return request.newBuilder()
-            .header("Authorization", accessToken)
+            .header("Authorization", "Bearer $accessToken")
             .build()
     }
 }
