@@ -3,6 +3,7 @@ package com.sl.il.src.ui.auth
 import com.sl.il.src.backend.TokenStore
 import com.sl.il.src.backend.api.AuthApi
 import com.sl.il.src.backend.model.Credentials
+import com.sl.il.src.backend.model.Token
 import com.sl.il.src.base.BaseViewModel
 import com.sl.il.src.ui.auth.interfaces.IPasswordValidator
 import com.sl.il.src.utils.LiveEvent
@@ -31,9 +32,7 @@ class AuthViewModel @Inject constructor(
             authApi.postRegister(Credentials(username, password)).subscribeOn(Schedulers.io())
                 .autoDisposable()
                 .subscribe({ token ->
-                    tokenStore.storeToken(token.token, TokenStore.TOKEN_PREF_KEY)
-                    tokenStore.storeToken(token.refreshToken, TokenStore.REFRESH_TOKEN_PREF_KEY)
-                    registerEvent.postValue(AuthStatus.SUCCESS)
+                    onSuccessfulAuth(token, registerEvent)
                 }, {
                     Timber.e(it)
                     registerEvent.postValue(AuthStatus.FAILED)
@@ -44,15 +43,23 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    @ExperimentalStdlibApi
     fun login(username: String, password: String) {
         authApi.postLogin(Credentials(username, password)).subscribeOn(Schedulers.io())
             .autoDisposable()
-            .subscribe({
+            .subscribe({ token ->
                 Timber.d("Authentication good!")
-                loginEvent.postValue(AuthStatus.SUCCESS)
+                onSuccessfulAuth(token, loginEvent)
             }, {
                 Timber.e(it)
                 loginEvent.postValue(AuthStatus.FAILED)
             })
+    }
+
+    @ExperimentalStdlibApi
+    private fun onSuccessfulAuth(token: Token, event: MutableLiveEvent<AuthStatus>) {
+        tokenStore.storeToken(token.token, TokenStore.TOKEN_PREF_KEY)
+        tokenStore.storeToken(token.refreshToken, TokenStore.REFRESH_TOKEN_PREF_KEY)
+        event.postValue(AuthStatus.SUCCESS)
     }
 }
